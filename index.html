@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PELAGO STUDIO | The Art of Being Seen</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Montserrat Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            red: '#E50914',
+                            crimson: '#990000',
+                            darkRed: '#4A0000',
+                            black: '#080808',
+                        }
+                    },
+                    letterSpacing: {
+                        superwide: '0.25em',
+                        ultra: '0.35em',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080808;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #E50914;
+        }
+
+        /* Typography sizing matching design */
+        .hero-title-line1 {
+            font-weight: 200;
+            letter-spacing: 0.18em;
+        }
+        .hero-title-line2 {
+            font-weight: 100;
+            letter-spacing: -0.02em;
+        }
+        .hero-title-line2 span.bold-seen {
+            font-weight: 800;
+            letter-spacing: 0.05em;
+        }
+
+        /* Red dramatic ambient light overlay */
+        .red-glow-radial {
+            background: radial-gradient(circle at 50% 70%, rgba(180, 0, 0, 0.45) 0%, rgba(90, 0, 0, 0.2) 40%, rgba(5, 5, 5, 0) 75%);
+        }
+
+        /* Grid pattern background */
+        .bg-grid {
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* Subtle image hover zoom */
+        .gallery-card:hover .gallery-img {
+            transform: scale(1.06);
+        }
+    </style>
+</head>
+<body class="bg-black text-white selection:bg-brand-red selection:text-white">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="fixed top-0 left-0 w-full z-50 mix-blend-difference px-6 md:px-12 py-6 flex justify-between items-center transition-all duration-300" id="navbar">
+        <!-- LOGO CONTAINER (Easy to swap with your logo image) -->
+        <a href="#home" class="group flex items-center gap-2 focus:outline-none">
+            <!-- SVG / Text Logo Replica -->
+            <div class="flex items-center">
+                <img src="images/pelagostudio-logo.png" alt="PELAGO STUDIO" class="h-8 w-auto">
+            </div>
+            <!-- Optional: Replace above div with: <img src="your-logo.png" alt="PELAGO STUDIO" class="h-8 w-auto"> -->
+        </a>
+
+        <!-- NAV LINKS -->
+        <nav class="hidden md:flex items-center space-x-10">
+            <a href="#gallery" class="text-xs uppercase tracking-ultra font-light text-gray-300 hover:text-brand-red transition-colors duration-300 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-brand-red hover:after:w-full after:transition-all">GALLERY</a>
+            <a href="#about" class="text-xs uppercase tracking-ultra font-light text-gray-300 hover:text-brand-red transition-colors duration-300 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-brand-red hover:after:w-full after:transition-all">ABOUT</a>
+            <a href="#contacts" class="text-xs uppercase tracking-ultra font-light text-gray-300 hover:text-brand-red transition-colors duration-300 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-brand-red hover:after:w-full after:transition-all">CONTACTS</a>
+        </nav>
+
+        <!-- MOBILE MENU BUTTON -->
+        <button id="menu-btn" aria-label="Toggle Navigation Menu" class="md:hidden text-white hover:text-brand-red focus:outline-none">
+            <i data-lucide="menu" class="w-7 h-7"></i>
+        </button>
+    </header>
+
+    <!-- MOBILE MENU OVERLAY -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-40 flex flex-col justify-center items-center space-y-8 text-center opacity-0 pointer-events-none transition-all duration-300 md:hidden">
+        <a href="#gallery" class="mobile-nav-link text-xl uppercase tracking-ultra font-light hover:text-brand-red transition-colors">GALLERY</a>
+        <a href="#about" class="mobile-nav-link text-xl uppercase tracking-ultra font-light hover:text-brand-red transition-colors">ABOUT</a>
+        <a href="#contacts" class="mobile-nav-link text-xl uppercase tracking-ultra font-light hover:text-brand-red transition-colors">CONTACTS</a>
+        <button id="close-menu" class="absolute top-6 right-6 text-white p-2">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+    </div>
+
+    <!-- MAIN HERO SECTION -->
+    <section id="home" class="relative w-full h-screen min-h-[650px] flex flex-col justify-center items-center overflow-hidden bg-black select-none">
+        
+        <!-- RED MOUNTAIN BACKGROUND GRAPHIC -->
+       <img 
+                id="hero-mountain"
+                src="images/uidesign-bg.png" 
+                alt="Red Mountain Background"
+                class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-auto h-auto md:h-auto object-contain object-bottom z-0 opacity-95 transition-transform duration-700 ease-out hero-fade-in filter drop-shadow-[0_10px_35px_rgba(180,0,0,0.3)]"
+            
+            />
+
+            <!-- Gradasi Hitam di Bagian Bawah Gambar Gunung (Menyambungkan dengan Seamless ke Konten Berikutnya) -->
+            <div class="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black via-black/80 to-transparent z-15"></div>
+        </div>
+
+        <!-- HERO HEADLINE CONTENT (Matching Image Layout Exact Typography) -->
+        <div class="relative z-20 text-center px-4 max-w-5xl mx-auto flex flex-col items-center justify-center">
+            
+            <!-- LINE 1: THE ART OF -->
+            <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl hero-title-line1 text-white tracking-[0.2em] sm:tracking-[0.25em] uppercase mb-0 sm:mb-2">
+                THE ART
+            </h1>
+            
+            <!-- LINE 2: OF BEING SEEN -->
+            <div class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl uppercase flex flex-wrap items-center justify-center gap-x-3 sm:gap-x-5 leading-none mt-1 sm:mt-0">
+                <span class="hero-title-line2 font-extralight tracking-tight text-white">OF</span>
+                <span class="hero-title-line2 font-light tracking-widest text-white">BEING</span>
+                <span class="bold-seen text-white font-extrabold tracking-wider drop-shadow-[0_5px_15px_rgba(229,9,20,0.4)]">SEEN</span>
+            </div>
+
+            <!-- SUBTEXT / TAGLINE -->
+            <p class="mt-8 text-xs sm:text-sm font-light tracking-ultra uppercase text-gray-400 max-w-md mx-auto">
+                Layout Design ✱ Graphic Design ✱ Visual Storytelling
+            </p>
+
+            <!-- CALL TO ACTION BUTTON -->
+            <div class="mt-10 flex flex-col sm:flex-row gap-4 items-center">
+                <a href="#gallery" class="group relative inline-flex items-center justify-center px-8 py-3.5 text-xs tracking-ultra font-medium uppercase text-white bg-transparent border border-brand-red overflow-hidden transition-all duration-300 hover:text-white">
+                    <span class="absolute inset-0 w-full h-full bg-brand-red transition-all duration-300 ease-out transform -translate-x-full group-hover:translate-x-0"></span>
+                    <span class="relative z-10 flex items-center gap-2">
+                        Explore Work <i data-lucide="arrow-down-right" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- SCROLL INDICATOR -->
+        <a href="#gallery" aria-label="Scroll to Gallery" class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 text-gray-500 hover:text-brand-red transition-colors duration-300 animate-bounce">
+            <i data-lucide="chevron-down" class="w-6 h-6"></i>
+        </a>
+    </section>
+
+    <!-- FEATURED GALLERY SECTION -->
+    <section id="gallery" class="relative py-28 px-6 md:px-12 bg-black border-t border-neutral-900 bg-grid">
+        <div class="max-w-7xl mx-auto">
+            
+            <!-- SECTION HEADER -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-neutral-800">
+                <div>
+                    <span class="text-brand-red text-xs font-semibold tracking-ultra uppercase block mb-2">Selected Works</span>
+                    <h2 class="text-3xl md:text-5xl font-extralight tracking-wider uppercase">
+                        PORTFOLIO <span class="font-bold text-brand-red">EXHIBITION</span>
+                    </h2>
+                </div>
+                <p class="text-gray-400 text-xs sm:text-sm max-w-md mt-4 md:mt-0 font-light leading-relaxed">
+                    Crafting bold visual identity and powerful digital experiences that demand focus in an overcrowded landscape.
+                </p>
+            </div>
+
+            <!-- GALLERY GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- CARD 1 -->
+                <a href="la-galleria.html" class="gallery-card group relative bg-neutral-950 border border-neutral-900 rounded-sm overflow-hidden flex flex-col justify-between h-[420px] transition-all duration-500 hover:border-brand-red/60 cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10 opacity-80 group-hover:opacity-60 transition-opacity"></div>
+                    <img src="images/uidesign-bg2.jpg" alt="Dark Abstraction Project" class="gallery-img absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out">
+                    
+                    <div class="relative z-20 p-6 flex justify-between items-start">
+                        <span class="text-[10px] tracking-ultra text-white/70 bg-black/60 backdrop-blur-md px-3 py-1 uppercase border border-white/10">Constellations</span>
+                        <span class="text-brand-red font-mono text-xs">01</span>
+                    </div>
+
+                    <div class="relative z-20 p-6">
+                        <h3 class="text-xl font-bold tracking-wider text-white group-hover:text-brand-red transition-colors">THE SCATTERED ARCHIVE</h3>
+                        <p class="text-xs text-gray-400 mt-2 font-light line-clamp-2">A curated collection of fragments, structures, and visual identities gathered across time.</p>
+                        <div class="mt-4 pt-4 border-t border-white/10 flex items-center text-xs tracking-wider uppercase font-medium text-brand-red group-hover:translate-x-1 transition-transform">
+                            Descend Into the Archive <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-2"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- CARD 2 -->
+                <div class="gallery-card group relative bg-neutral-950 border border-neutral-900 rounded-sm overflow-hidden flex flex-col justify-between h-[420px] transition-all duration-500 hover:border-brand-red/60">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10 opacity-80 group-hover:opacity-60 transition-opacity"></div>
+                    <img src="images/etymology-behind.jpg" alt="Architectural Design" class="gallery-img absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out">
+                    
+                    <div class="relative z-20 p-6 flex justify-between items-start">
+                        <span class="text-[10px] tracking-ultra text-white/70 bg-black/60 backdrop-blur-md px-3 py-1 uppercase border border-white/10">Etymology</span>
+                        <span class="text-brand-red font-mono text-xs">02</span>
+                    </div>
+
+                    <div class="relative z-20 p-6">
+                        <h3 class="text-xl font-bold tracking-wider text-white group-hover:text-brand-red transition-colors">ROOTS & CURRENTS</h3>
+                        <p class="text-xs text-gray-400 mt-2 font-light line-clamp-2">Grounded in Indonesian identity, moving fluidly toward global horizons.</p>
+                        <div class="mt-4 pt-4 border-t border-white/10 flex items-center text-xs tracking-wider uppercase font-medium text-brand-red group-hover:translate-x-1 transition-transform">
+                            Trace the Islands <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 3 -->
+                <div class="gallery-card group relative bg-neutral-950 border border-neutral-900 rounded-sm overflow-hidden flex flex-col justify-between h-[420px] transition-all duration-500 hover:border-brand-red/60">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10 opacity-80 group-hover:opacity-60 transition-opacity"></div>
+                    <img src="images/uidesign-deepwater.jpg" alt="Digital Experience" class="gallery-img absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out">
+                    
+                    <div class="relative z-20 p-6 flex justify-between items-start">
+                        <span class="text-[10px] tracking-ultra text-white/70 bg-black/60 backdrop-blur-md px-3 py-1 uppercase border border-white/10">Under the Current</span>
+                        <span class="text-brand-red font-mono text-xs">03</span>
+                    </div>
+
+                    <div class="relative z-20 p-6">
+                        <h3 class="text-xl font-bold tracking-wider text-white group-hover:text-brand-red transition-colors">DEEPWATER CO.</h3>
+                        <p class="text-xs text-gray-400 mt-2 font-light line-clamp-2">Descending into fandom culture, specialized pop aesthetics, and niche visual lore.</p>
+                        <div class="mt-4 pt-4 border-t border-white/10 flex items-center text-xs tracking-wider uppercase font-medium text-brand-red group-hover:translate-x-1 transition-transform">
+                            Follow the Current <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT / PHILOSOPHY SECTION -->
+    <section id="about" class="relative py-28 px-6 md:px-12 bg-neutral-950 border-t border-neutral-900 overflow-hidden">
+        
+        <!-- Background Ambient Red Flare -->
+        <div class="absolute -right-40 top-1/2 -translate-y-1/2 w-96 h-96 bg-brand-red/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left Branding Pillar -->
+            <div class="lg:col-span-5 flex flex-col justify-center">
+                <span class="text-brand-red text-xs font-semibold tracking-ultra uppercase mb-3">Our Philosophy</span>
+                <h2 class="text-4xl sm:text-5xl font-extralight tracking-wider leading-tight uppercase mb-6">
+                    WE BUILD <br>
+                    <span class="font-extrabold text-white">VISUAL ANCHORS</span> <br>
+                    <span class="font-black text-brand-red">IN A DRIFTING WORLD.</span>
+                </h2>
+                <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">
+                    Trends fade in the drift; timeless design anchored by sound visual logic remains. We don’t just design for immediate attention—we shape brand systems built to command reverence, weather market shifts, and leave a permanent imprint.
+                </p>
+                
+                <!-- Quick Stats Grid -->
+                <div class="grid grid-cols-3 gap-6 pt-6 border-t border-neutral-800">
+                    <div>
+                        <div class="text-2xl font-extrabold text-white">10+</div>
+                        <div class="text-[10px] tracking-wider uppercase text-gray-500 mt-1">Years Designer Experiences</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-extrabold text-brand-red">50+</div>
+                        <div class="text-[10px] tracking-wider uppercase text-gray-500 mt-1">Projects</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-extrabold text-white">25+</div>
+                        <div class="text-[10px] tracking-wider uppercase text-gray-500 mt-1">Repeated Clients</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Interactive Graphic Card -->
+            <div class="lg:col-span-7">
+                <div class="relative p-8 md:p-12 bg-black border border-neutral-800 rounded-sm shadow-2xl">
+                    <div class="absolute top-0 right-0 w-24 h-24 border-t-2 border-r-2 border-brand-red pointer-events-none"></div>
+                    
+                    <h3 class="text-xs uppercase tracking-ultra text-brand-red font-semibold mb-6">Core Capabilities</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="group border-b border-neutral-900 pb-4">
+                            <div class="flex justify-between items-center cursor-pointer">
+                                <h4 class="text-lg font-medium tracking-wide group-hover:text-brand-red transition-colors">01 / LAYOUT DESIGN </h4>
+                                <i data-lucide="chevron-right" class="w-5 h-5 text-gray-600 group-hover:text-brand-red group-hover:translate-x-1 transition-all"></i>
+                            </div>
+                            <p class="text-xs text-gray-500 font-light mt-2">Architectural precision for complex content. We translate heavy information into effortless, authoritative hierarchy through decades of publishing rigor—crafting scannable, masterfully structured editorial print, books, magazines, and long-form collateral.</p>
+                        </div>
+
+                        <div class="group border-b border-neutral-900 pb-4">
+                            <div class="flex justify-between items-center cursor-pointer">
+                                <h4 class="text-lg font-medium tracking-wide group-hover:text-brand-red transition-colors">02 / GRAPHIC DESIGN</h4>
+                                <i data-lucide="chevron-right" class="w-5 h-5 text-gray-600 group-hover:text-brand-red group-hover:translate-x-1 transition-all"></i>
+                            </div>
+                            <p class="text-xs text-gray-500 font-light mt-2">From rule-breaking campaign collateral and expressive digital assets to brutalist, anti-design movements, we craft high-contrast visuals that disrupt feed monotony and force immediate engagement.</p>
+                        </div>
+
+                        <div class="group border-b border-neutral-900 pb-4">
+                            <div class="flex justify-between items-center cursor-pointer">
+                                <h4 class="text-lg font-medium tracking-wide group-hover:text-brand-red transition-colors">03 / BRAND LOGO & IDENTITY</h4>
+                                <i data-lucide="chevron-right" class="w-5 h-5 text-gray-600 group-hover:text-brand-red group-hover:translate-x-1 transition-all"></i>
+                            </div>
+                            <p class="text-xs text-gray-500 font-light mt-2">Complete visual positioning and enduring brand DNA. We build comprehensive identity systems—distinct wordmarks, flexible marks, nuanced color palettes, and typographic guidelines—that give your enterprise a cohesive, commanding presence across every touchpoint.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contacts" class="relative py-28 px-6 md:px-12 bg-black border-t border-neutral-900">
+        <div class="max-w-5xl mx-auto">
+            
+            <div class="text-center mb-16">
+                <span class="text-brand-red text-xs font-semibold tracking-ultra uppercase block mb-3">Initiate Dialogue</span>
+                <h2 class="text-4xl sm:text-6xl font-extralight tracking-wider uppercase">
+                    LET'S CREATE SOMETHING <br>
+                    <span class="font-extrabold text-brand-red">UNFORGETTABLE.</span>
+                </h2>
+            </div>
+
+            <!-- CONTACT FORM & DETAILS GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+                
+                <!-- Info Column -->
+                <div class="md:col-span-5 space-y-8 flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-xs tracking-ultra uppercase text-gray-400 mb-2">Direct Contact</h4>
+                        <a href="mailto:pelago.studioplg@gmail.com" class="text-xl font-medium hover:text-brand-red transition-colors">pelago.studioplg@gmail.com</a>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xs tracking-ultra uppercase text-gray-400 mb-2">Studio Location</h4>
+                        <p class="text-sm text-gray-300 font-light leading-relaxed">
+                            ST. Syahrir Street No. 93<br>
+                            Palembang, South Sumatera
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xs tracking-ultra uppercase text-gray-400 mb-3">Social Networks</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 border border-neutral-800 rounded-full flex items-center justify-center hover:border-brand-red hover:text-brand-red transition-all">
+                                <i data-lucide="instagram" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 border border-neutral-800 rounded-full flex items-center justify-center hover:border-brand-red hover:text-brand-red transition-all">
+                                <i data-lucide="twitter" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 border border-neutral-800 rounded-full flex items-center justify-center hover:border-brand-red hover:text-brand-red transition-all">
+                                <i data-lucide="linkedin" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Column -->
+                <div class="md:col-span-7">
+                    <form id="contact-form" class="space-y-6" onsubmit="handleFormSubmit(event)">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2 font-light">Your Name</label>
+                            <input type="text" required placeholder="John Doe" class="w-full bg-neutral-950 border border-neutral-800 focus:border-brand-red text-white text-sm px-4 py-3 rounded-none outline-none transition-colors">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2 font-light">Email Address</label>
+                            <input type="email" required placeholder="john@example.com" class="w-full bg-neutral-950 border border-neutral-800 focus:border-brand-red text-white text-sm px-4 py-3 rounded-none outline-none transition-colors">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2 font-light">Project Description</label>
+                            <textarea rows="4" required placeholder="Tell us about your brand goals..." class="w-full bg-neutral-950 border border-neutral-800 focus:border-brand-red text-white text-sm px-4 py-3 rounded-none outline-none transition-colors resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-brand-red hover:bg-red-700 text-white font-semibold text-xs tracking-ultra uppercase py-4 transition-colors duration-300">
+                            Send Transmission
+                        </button>
+                    </form>
+                    
+                    <!-- Form Status Banner -->
+                    <div id="form-status" class="hidden mt-4 p-4 border border-brand-red/50 bg-brand-red/10 text-xs text-white text-center">
+                        Message received. Our studio will reach out within 24 hours.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-8 px-6 md:px-12 bg-black border-t border-neutral-900 text-neutral-600 text-xs font-light flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-2">
+            <span class="font-extrabold text-white tracking-wider">PELAGO<span class="text-brand-red">STUDIO</span>
+            <span>&copy; <span id="year"></span> All Rights Reserved.</span>
+        </div>
+        <div class="flex space-x-6 tracking-wider uppercase text-[10px]">
+            <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Dynamic Year Update
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Navigation Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        function toggleMenu(show) {
+            if (show) {
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        menuBtn.addEventListener('click', () => toggleMenu(true));
+        closeMenuBtn.addEventListener('click', () => toggleMenu(false));
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => toggleMenu(false));
+        });
+
+        // Parallax Mountain Effect on Mouse Move
+        const heroSection = document.getElementById('home');
+        const heroMountain = document.getElementById('hero-mountain');
+
+        if (window.innerWidth > 768) {
+            heroSection.addEventListener('mousemove', (e) => {
+                const { clientX, clientY } = e;
+                const moveX = (clientX - window.innerWidth / 2) * 0.015;
+                const moveY = (clientY - window.innerHeight / 2) * 0.015;
+                heroMountain.style.transform = `translate(calc(-50% + ${moveX}px), ${moveY}px)`;
+            });
+        }
+
+        // Handle Contact Form Submission
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const statusBox = document.getElementById('form-status');
+            const form = document.getElementById('contact-form');
+            
+            statusBox.classList.remove('hidden');
+            form.reset();
+            
+            setTimeout(() => {
+                statusBox.classList.add('hidden');
+            }, 6000);
+        }
+
+        // Navbar Scroll Styling Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-black/80', 'backdrop-blur-md', 'py-4');
+                navbar.classList.remove('py-6', 'mix-blend-difference');
+            } else {
+                navbar.classList.remove('bg-black/80', 'backdrop-blur-md', 'py-4');
+                navbar.classList.add('py-6', 'mix-blend-difference');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE SCATTERED ARCHIVE | PELAGO STUDIO</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Montserrat Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            red: '#E50914',
+                            crimson: '#990000',
+                            darkRed: '#4A0000',
+                            black: '#080808',
+                        }
+                    },
+                    letterSpacing: {
+                        superwide: '0.25em',
+                        ultra: '0.35em',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Subtle grid background */
+        .bg-grid {
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* ======================================================== */
+        /* 3D COVERFLOW CAROUSEL STYLES                             */
+        /* ======================================================== */
+        .coverflow-stage {
+            perspective: 1200px;
+            transform-style: preserve-3d;
+        }
+
+        .coverflow-track {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .coverflow-item {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 280px;
+            height: 340px;
+            margin-left: -140px;
+            margin-top: -170px;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, filter 0.6s ease, border-color 0.4s ease;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        @media (min-width: 640px) {
+            .coverflow-item {
+                width: 380px;
+                height: 440px;
+                margin-left: -190px;
+                margin-top: -220px;
+                border-radius: 36px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .coverflow-item {
+                width: 440px;
+                height: 500px;
+                margin-left: -220px;
+                margin-top: -250px;
+                border-radius: 40px;
+            }
+        }
+
+        /* Card Content Styling */
+        .coverflow-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #0d0d0d;
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: inherit;
+            overflow: hidden;
+        }
+
+        .coverflow-item.active .coverflow-card-inner {
+            border-color: rgba(229, 9, 20, 0.6);
+            box-shadow: 0 0 30px rgba(229, 9, 20, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-black text-white selection:bg-brand-red selection:text-white min-h-screen flex flex-col justify-between">
+
+    <!-- TOP NAV / BACK BUTTON BAR -->
+    <header class="w-full border-b border-neutral-900 bg-black/80 backdrop-blur-md sticky top-0 z-50 px-6 md:px-12 py-5 flex justify-between items-center">
+        <!-- Logo Link Back Home -->
+        <a href="index.html" class="flex items-center gap-1 font-extrabold text-xl tracking-wider text-white hover:text-brand-red transition-colors">
+            <img src="images/pelagostudio-logo.png" alt="PELAGO STUDIO" class="h-8 w-auto">
+        </a>
+
+        <!-- Back to Home Link -->
+        <a href="index.html#gallery" class="flex items-center gap-2 text-xs uppercase tracking-ultra font-light text-gray-300 hover:text-brand-red transition-colors">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Gallery
+        </a>
+    </header>
+
+    <!-- MAIN CASE STUDY CONTENT -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-10 md:py-16 w-full flex-grow overflow-hidden">
+        
+        <!-- PROJECT HEADER -->
+        <div class="mb-8 md:mb-12 text-center max-w-3xl mx-auto">
+            <div class="flex items-center justify-center gap-3 text-xs tracking-ultra text-brand-red font-semibold mb-3">
+                <span>A CURATED COLLECTION OF FRAGMENTS</span>
+                <span>•</span>
+                <span class="text-gray-400">GATHERED ACROSS TIME</span>
+            </div>
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-wide uppercase text-white mb-4">
+                THE SCATTERED <span class="text-brand-red">ARCHIVE</span>
+            </h1>
+            <p class="text-gray-400 text-xs sm:text-sm font-light leading-relaxed">
+                Swipe or click cards to navigate through the 3D cover flow gallery showcase.
+            </p>
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- 3D COVERFLOW CAROUSEL CONTAINER                         -->
+        <!-- ======================================================== -->
+        <div class="relative w-full h-[400px] sm:h-[500px] md:h-[580px] my-6 flex items-center justify-center select-none" id="coverflow-container">
+            
+            <div class="coverflow-stage w-full h-full flex items-center justify-center">
+                <div class="coverflow-track" id="coverflow-track">
+                    
+                    <!-- FOTO / CARD 1 -->
+                    <div class="coverflow-item">
+                        <div class="coverflow-card-inner">
+                            <img src="images/wartapendidikan.jpg" alt="Slide 1" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                            <div class="absolute bottom-5 left-5 right-5 flex justify-between items-end">
+                                <div>
+                                    <span class="text-brand-red font-mono text-xs font-bold block">01 / CONSTELLATIONS</span>
+                                    <h3 class="text-lg sm:text-xl font-bold uppercase tracking-wider text-white">WARTA PENDIDIKAN</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FOTO / CARD 2 -->
+                    <div class="coverflow-item">
+                        <div class="coverflow-card-inner">
+                            <img src="images/lokasi-plg.jpg" alt="Slide 2" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                            <div class="absolute bottom-5 left-5 right-5 flex justify-between items-end">
+                                <div>
+                                    <span class="text-brand-red font-mono text-xs font-bold block">02 / CONSTELLATIONS</span>
+                                    <h3 class="text-lg sm:text-xl font-bold uppercase tracking-wider text-white">LOKAKARYA KONTEN KREASI</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FOTO / CARD 3 -->
+                    <div class="coverflow-item">
+                        <div class="coverflow-card-inner">
+                            <img src="images/pelago-soonprev.jpg" alt="Slide 3" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                            <div class="absolute bottom-5 left-5 right-5 flex justify-between items-end">
+                                <div>
+                                    <span class="text-brand-red font-mono text-xs font-bold block">03 / CONSTELLATIONS</span>
+                                    <h3 class="text-lg sm:text-xl font-bold uppercase tracking-wider text-white">COMING SOON</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FOTO / CARD 4 -->
+                    <div class="coverflow-item">
+                        <div class="coverflow-card-inner">
+                            <img src="images/pelago-soonprev.jpg" alt="Slide 4" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                            <div class="absolute bottom-5 left-5 right-5 flex justify-between items-end">
+                                <div>
+                                    <span class="text-brand-red font-mono text-xs font-bold block">04 / CONSTELLATIONS</span>
+                                    <h3 class="text-lg sm:text-xl font-bold uppercase tracking-wider text-white">COMING SOON</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FOTO / CARD 5 -->
+                    <div class="coverflow-item">
+                        <div class="coverflow-card-inner">
+                            <img src="images/pelago-soonprev.jpg" alt="Slide 5" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                            <div class="absolute bottom-5 left-5 right-5 flex justify-between items-end">
+                                <div>
+                                    <span class="text-brand-red font-mono text-xs font-bold block">05 / CONSTELLATIONS</span>
+                                    <h3 class="text-lg sm:text-xl font-bold uppercase tracking-wider text-white">COMING SOON</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FOTO / CARD 6 -->
+                    <div class="coverflow-item">
+                        <div class="coverflow-card-inner">
+                            <img src="images/pelago-soonprev.jpg" alt="Slide 6" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                            <div class="absolute bottom-5 left-5 right-5 flex justify-between items-end">
+                                <div>
+                                    <span class="text-brand-red font-mono text-xs font-bold block">06 / CONSTELLATIONS</span>
+                                    <h3 class="text-lg sm:text-xl font-bold uppercase tracking-wider text-white">COMING SOON</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FOTO / CARD 7 -->
+                    <div class="coverflow-item">
+                        <div class="coverflow-card-inner">
+                            <img src="images/pelago-soonprev.jpg" alt="Slide 7" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                            <div class="absolute bottom-5 left-5 right-5 flex justify-between items-end">
+                                <div>
+                                    <span class="text-brand-red font-mono text-xs font-bold block">07 / CONSTELLATIONS</span>
+                                    <h3 class="text-lg sm:text-xl font-bold uppercase tracking-wider text-white">COMING SOON</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- BUTTON NAVIGASI MANUAL (PREV / NEXT) -->
+            <button id="cf-prev-btn" class="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/70 hover:bg-brand-red text-white flex items-center justify-center backdrop-blur-md border border-white/15 transition-all duration-300 z-30 focus:outline-none" aria-label="Previous Slide">
+                <i data-lucide="chevron-left" class="w-6 h-6"></i>
+            </button>
+            
+            <button id="cf-next-btn" class="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/70 hover:bg-brand-red text-white flex items-center justify-center backdrop-blur-md border border-white/15 transition-all duration-300 z-30 focus:outline-none" aria-label="Next Slide">
+                <i data-lucide="chevron-right" class="w-6 h-6"></i>
+            </button>
+
+            <!-- COVERFLOW INDICATOR DOTS -->
+            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 z-30 flex gap-2.5" id="cf-dots">
+                <!-- Dots generated automatically via JS -->
+            </div>
+        </div>
+        <!-- ======================================================== -->
+
+        <!-- PROJECT SPECIFICATION GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 py-12 border-t border-b border-neutral-900 mt-12">
+            <!-- Left Info -->
+            <div class="md:col-span-4 space-y-6">
+                <div>
+                    <h4 class="text-xs uppercase tracking-ultra text-gray-500 mb-1">Intentionally Small. Expansively Skilled.</h4>
+                    <p class="text-base uppercase font-semibold text-white">Two Currents. One Horizon.</p>
+                </div>
+                <div>
+                    <h4 class="text-xs uppercase tracking-ultra text-gray-500 mb-1">In the Space Between</h4>
+                    <ul class="text-xs text-gray-300 space-y-1.5 font-light">
+                        <li class="flex items-center gap-2">Born between structural precision and radical form, PELAGO operates as a two-person sanctuary—delivering the depth of an agency without the noise.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Detail Description -->
+            <div class="md:col-span-8 space-y-4">
+                <h3 class="text-xl font-bold uppercase tracking-wider text-white">The Spirit of the Archipelago</h3>
+                <p class="text-sm font-light text-gray-300 leading-relaxed">
+                    A living repository of our studio’s evolution, this curated selection brings together structural layout systems, bold typographic studies, and distinct brand identities shaped over years of practice.
+                </p>
+                <p class="text-sm font-light text-gray-300 leading-relaxed">
+                    Each piece represents a specific moment where discipline met visual intuition—ranging from heavy municipal publication archives and editorial heritage to boundary-pushing modern identity design. Together, these fragments form a continuous visual current, reflecting our commitment to work that is intentional, masterfully structured, and built to endure the drift of time.
+                </p>
+            </div>
+        </div>
+
+        <!-- FOOTER CALL TO ACTION -->
+        <div class="mt-16 text-center bg-neutral-950 border border-neutral-900 p-8 sm:p-12 rounded-2xl">
+            <h3 class="text-2xl sm:text-3xl font-extralight uppercase tracking-wider mb-4">WANT A SIMILAR SOLUTION FOR YOUR BRAND?</h3>
+            <a href="index.html#contacts" class="inline-flex items-center gap-2 px-8 py-3.5 bg-brand-red hover:bg-red-700 text-white font-semibold text-xs tracking-ultra uppercase transition-colors rounded-full">
+                Start a Conversation <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="py-6 px-6 md:px-12 bg-black border-t border-neutral-900 text-neutral-600 text-xs font-light flex justify-between items-center">
+        <span>&copy; PELAGO STUDIO. All Rights Reserved.</span>
+        <a href="index.html" class="hover:text-white transition-colors">Return Home</a>
+    </footer>
+
+    <!-- 3D COVERFLOW SCRIPT -->
+    <script>
+        lucide.createIcons();
+
+        // 3D COVERFLOW ENGINE
+        const items = Array.from(document.querySelectorAll('.coverflow-item'));
+        const prevBtn = document.getElementById('cf-prev-btn');
+        const nextBtn = document.getElementById('cf-next-btn');
+        const dotsContainer = document.getElementById('cf-dots');
+        const container = document.getElementById('coverflow-container');
+
+        let currentIndex = 0;
+        const totalItems = items.length;
+        const autoSlideSpeed = 3000; // 3 seconds per slide
+        let autoTimer = null;
+
+        // Generate dots
+        items.forEach((_, idx) => {
+            const dot = document.createElement('button');
+            dot.className = `w-2.5 h-2.5 rounded-full transition-all duration-300 ${idx === 0 ? 'bg-brand-red w-6' : 'bg-white/30 hover:bg-white/70'}`;
+            dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+            dot.addEventListener('click', () => {
+                currentIndex = idx;
+                updateCoverflow();
+                resetTimer();
+            });
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = Array.from(dotsContainer.children);
+
+        // Core 3D Math Positioning Function
+        function updateCoverflow() {
+            // Screen responsiveness offset calculation
+            const isMobile = window.innerWidth < 640;
+            const isTablet = window.innerWidth < 1024;
+            
+            const xOffset = isMobile ? 160 : isTablet ? 230 : 280;
+            const zOffset = isMobile ? -180 : -220;
+            const rotationY = isMobile ? 40 : 45;
+
+            items.forEach((item, index) => {
+                // Calculate position relative to active center item
+                let offset = index - currentIndex;
+
+                // Handle circular wrapping for continuous loop logic
+                if (offset > totalItems / 2) {
+                    offset -= totalItems;
+                } else if (offset < -totalItems / 2) {
+                    offset += totalItems;
+                }
+
+                const absOffset = Math.abs(offset);
+
+                if (offset === 0) {
+                    // Center Active Card
+                    item.style.transform = `translateX(0px) translateZ(100px) rotateY(0deg) scale(1)`;
+                    item.style.opacity = '1';
+                    item.style.zIndex = '20';
+                    item.style.filter = 'none';
+                    item.classList.add('active');
+                } else {
+                    // Side 3D Rotated Cards
+                    item.classList.remove('active');
+                    
+                    const direction = offset > 0 ? 1 : -1;
+                    // Exponential stack back effect
+                    const translateX = direction * (xOffset + (absOffset - 1) * (isMobile ? 60 : 90));
+                    const translateZ = zOffset - (absOffset - 1) * 80;
+                    const rotateY = -direction * rotationY;
+                    const scale = Math.max(0.6, 0.85 - (absOffset - 1) * 0.12);
+                    const opacity = Math.max(0, 1 - absOffset * 0.25);
+
+                    item.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+                    item.style.opacity = opacity.toString();
+                    item.style.zIndex = (10 - absOffset).toString();
+                    item.style.filter = `brightness(${Math.max(0.3, 0.7 - absOffset * 0.2)})`;
+                }
+            });
+
+            // Update Indicator Dots
+            dots.forEach((dot, idx) => {
+                if (idx === currentIndex) {
+                    dot.className = 'w-6 h-2.5 rounded-full bg-brand-red transition-all duration-300';
+                } else {
+                    dot.className = 'w-2.5 h-2.5 rounded-full bg-white/30 hover:bg-white/70 transition-all duration-300';
+                }
+            });
+        }
+
+        // Click on individual card to focus
+        items.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentIndex = index;
+                updateCoverflow();
+                resetTimer();
+            });
+        });
+
+        // Next / Prev Actions
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % totalItems;
+            updateCoverflow();
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+            updateCoverflow();
+        }
+
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetTimer();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetTimer();
+        });
+
+        // Auto Loop Timer Controls
+        function startTimer() {
+            stopTimer();
+            autoTimer = setInterval(nextSlide, autoSlideSpeed);
+        }
+
+        function stopTimer() {
+            if (autoTimer) clearInterval(autoTimer);
+        }
+
+        function resetTimer() {
+            startTimer();
+        }
+
+        // Pause on mouse hover
+        container.addEventListener('mouseenter', stopTimer);
+        container.addEventListener('mouseleave', startTimer);
+
+        // Touch Swipe Gesture Handling for Mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        container.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopTimer();
+        }, { passive: true });
+
+        container.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+            startTimer();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 40) {
+                if (diff > 0) nextSlide();
+                else prevSlide();
+            }
+        }
+
+        // Resize recalibration
+        window.addEventListener('resize', updateCoverflow);
+
+        // Initialize 3D positions
+        updateCoverflow();
+        startTimer();
+    </script>
+</body>
+</html>
